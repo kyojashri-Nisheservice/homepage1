@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   FaFileAlt,
@@ -47,7 +46,8 @@ const Filter = () => {
       ? allCards
       : allCards.filter((card) => card.category === selectedCategory);
 
- 
+  const cardsToShow = filteredCards.slice(0, visibleCards);
+
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -63,10 +63,8 @@ const Filter = () => {
           style={{
             color: "#555",
             marginTop: "10px",
-
-           fontSize: "clamp(12px, 5.5vw, 9px)",
-           fontWeight:"600",
-
+            fontSize: "clamp(12px, 5.5vw, 9px)",
+            fontWeight: "600",
             lineHeight: "1.2",
             textAlign: "center",
             margin: "0 auto",
@@ -74,11 +72,12 @@ const Filter = () => {
             whiteSpace: "wrap",
           }}
         >
-         Skip the queues. Apply online for Passport, PAN & more.
+          Skip the queues. Apply online for Passport, PAN & more.
         </p>
       </div>
 
-           <div
+      {/* Filters */}
+      <div
         style={{
           display: "flex",
           flexWrap: "nowrap",
@@ -96,13 +95,13 @@ const Filter = () => {
             key={filter.value}
             onClick={() => {
               setSelectedCategory(filter.value);
-              setVisibleCards(6);
+              setVisibleCards(6); // reset view on filter change
             }}
             style={{
               display: "flex",
               alignItems: "center",
               gap: "6px",
-              padding: windowWidth <= 768? "5px 10px" : "6px 14px",
+              padding: windowWidth <= 768 ? "5px 10px" : "6px 14px",
               borderRadius: "9999px",
               border:
                 selectedCategory === filter.value
@@ -142,25 +141,25 @@ const Filter = () => {
         </button>
       </div>
 
-  {/* cards section */}
+      {/* Cards Grid */}
       <div style={{ width: "100%", padding: "0 16px" }}>
-<div
-  style={{
-    display: "grid",
-    gridTemplateColumns: windowWidth <= 768 ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
-    gap: windowWidth <= 768 ? "8px" : "12px",
-    maxWidth: "1000px",
-    margin: "0 auto",
-  }}
->
-
-          {filteredCards.slice(0, 6).map((card) => (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              windowWidth <= 768 ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+            gap: windowWidth <= 768 ? "8px" : "12px",
+            maxWidth: "1000px",
+            margin: "0 auto",
+          }}
+        >
+          {cardsToShow.map((card) => (
             <Cart key={card.id} card={card} />
           ))}
         </div>
       </div>
 
-   
+      {/* View More / View Less */}
       <div style={{ textAlign: "center", marginTop: "30px" }}>
         {visibleCards < filteredCards.length ? (
           <button

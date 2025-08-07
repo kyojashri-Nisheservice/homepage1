@@ -1,4 +1,3 @@
-
 import React from "react";
 
 const Cart = ({ card }) => {
@@ -20,7 +19,7 @@ const Cart = ({ card }) => {
         src={card.image}
         alt={card.title}
         style={{
-          width: "130px",
+          width: "90px",
           height: "80px",
           marginBottom: "10px",
           objectFit: "contain",
